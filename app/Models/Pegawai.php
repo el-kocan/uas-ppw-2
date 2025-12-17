@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes; // Task 9
 
 class Pegawai extends Model
 {
@@ -11,8 +11,16 @@ class Pegawai extends Model
 
     protected $table = 'pegawai';
 
-    public function pegawai()
+    protected $fillable = [
+        'nama', 
+        'email', 
+        'gender', 
+        'pekerjaan_id', 
+        'is_active'
+    ];
+
+    public function pekerjaan()
     {
-        return $this->hasMany(Pegawai::class, 'pekerjaan_id');
+        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
     }
 }
