@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Pegawai extends Model
 {
     use SoftDeletes;
-    
+
     protected $table = 'pegawai';
 
     public function pegawai()
     {
-        return $this->hasOne(Pekerjaan::class);
+        return $this->hasMany(Pegawai::class, 'pekerjaan_id');
     }
 }

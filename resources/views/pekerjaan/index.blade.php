@@ -6,6 +6,17 @@
         <h1 class="text-3xl font-bold text-[#C0392B] mb-6 text-center">Pekerjaan</h1>
         <div class="mx-auto max-w-screen-xl">
             <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                @if(session('success'))
+                    <div class="mb-4 rounded-md bg-green-50 p-4 border border-green-200">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <p class="text-sm font-medium text-green-800">
+                                    {{ session('success') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <a href="{{ route('pekerjaan.add') }}" class="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700">
                     Tambah Data
                 </a>
@@ -30,10 +41,10 @@
                     <tbody class="divide-y divide-gray-100 bg-white">
                         @forelse($data as $k => $d)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3">{{ $k+1 }}</td>
+                            <td class="px-4 py-3">{{ $data->firstItem() + $k }}</td>
                             <td class="px-4 py-3 font-medium text-gray-900">{{ $d->nama }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ $d->deskripsi }}</td>
-                            <td class="px-4 py-3 text-gray-600">{{ 100 }}</td>
+                            <td class="px-4 py-3 text-gray-600">{{ $d->pegawai_count }} Pegawai</td>
                             <td class="px-4 py-3 text-center text-gray-600">
                                 <div class="inline-flex rounded-md shadow-sm" role="group">
                                     <a href="{{ route('pekerjaan.edit', ['id' => $d->id]) }}" class="cursor-pointer rounded-l-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50">
@@ -54,6 +65,9 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div class="mt-4">
+                    {{ $data->appends(request()->query())->links() }}
+                </div>
             </div>
 
         </div>

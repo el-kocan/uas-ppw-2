@@ -10,12 +10,19 @@ use Illuminate\Validation\Rule;
 class PekerjaanController extends Controller
 {
     public function index(Request $request) {
-        $keyword = $request->get('keyword');
-        $data = Pekerjaan::when($keyword, function ($query) use ($keyword) {
-            $query->where('nama', 'like', "%{$keyword}%")->orWhere('deskripsi', 'like', "%{$keyword}%");
-        })->get();
-        return view('pekerjaan.index', compact('data'));
-    }
+    $keyword = $request->get('keyword');
+    
+    // 1. Menambahkan withCount('pegawai') untuk Task 12
+    // 2. Ubah get() menjadi paginate(10) untuk Task 11
+    $data = Pekerjaan::withCount('pegawai')
+        ->when($keyword, function ($query) use ($keyword) {
+            $query->where('nama', 'like', "%{$keyword}%")
+                  ->orWhere('deskripsi', 'like', "%{$keyword}%");
+        })
+        ->paginate(10); // Menampilkan 10 data per halaman
+
+    return view('pekerjaan.index', compact('data'));
+}
 
     public function add() {
         return view('pekerjaan.add');
