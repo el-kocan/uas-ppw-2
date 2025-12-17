@@ -29,7 +29,10 @@ class PegawaiController extends Controller
         'nama' => 'required',
         'email' => 'required|email|unique:pegawai,email',
         'gender' => 'required|in:male,female',           
-        'pekerjaan_id' => 'required'
+        'pekerjaan_id' => 'required',
+        'captcha' => 'required|captcha' // Tambahkan validasi captcha
+    ], [
+        'captcha.captcha' => 'Kode captcha yang Anda masukkan salah.'
     ]);
 
         $data = $request->all();

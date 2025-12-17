@@ -53,6 +53,22 @@
                 </select>
             </div>
 
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Verifikasi Keamanan</label>
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="rounded border p-1 bg-gray-100">
+                        {!! captcha_img('flat') !!}
+                    </div>
+                    <button type="button" class="text-blue-600 text-xs underline" onclick="location.reload()">Refresh</button>
+                </div>
+                <input type="text" name="captcha" required placeholder="Masukkan kode di atas"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm @error('captcha') border-red-500 @enderror">
+                
+                @error('captcha')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div class="flex gap-2 mt-4">
                 <button type="submit" class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
                     Simpan Data
